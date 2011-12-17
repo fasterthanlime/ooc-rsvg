@@ -1,0 +1,6 @@
+= All
+Name: librsvg
+Description: Load .svg files
+SourcePath: source
+Pkgs: librsvg-2.0
+
