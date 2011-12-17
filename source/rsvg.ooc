@@ -3,7 +3,7 @@ use rsvg, cairo
 include librsvg/rsvg, librsvg/rsvg-cairo
 import cairo/Cairo
 
-SvgHandle: cover from RsvgHandle * {
+Svg: cover from RsvgHandle * {
 
     /**
      * Load an .svg file from an .svg file
@@ -15,7 +15,8 @@ SvgHandle: cover from RsvgHandle * {
 
     render: extern(rsvg_handle_render_cairo) func (cr: Context)
 
+    free: extern(rsvg_handle_free) func
+
 }
 
-rsvg_handle_new_from_file: extern func (path: CString, error: Pointer*) -> SvgHandle
-
+rsvg_handle_new_from_file: extern func (path: CString, error: Pointer*) -> Svg
