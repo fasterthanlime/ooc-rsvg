@@ -3,6 +3,13 @@ use rsvg, cairo
 include librsvg/rsvg, librsvg/rsvg-cairo
 import cairo/Cairo
 
+SvgDimensions: cover from RsvgDimensionData {
+    width:  extern Int
+    height: extern Int
+    em: extern Double
+    ex: extern Double
+}
+
 Svg: cover from RsvgHandle * {
 
     /**
@@ -13,7 +20,23 @@ Svg: cover from RsvgHandle * {
         rsvg_handle_new_from_file(path, null)  
     }
 
+    getDimensions: extern(rsvg_handle_get_dimensions) func (dimensions: SvgDimensions*)
+
+    getWidth: func -> Int {
+        dimensions: SvgDimensions
+        getDimensions(dimensions&)
+        dimensions width
+    }
+
+    getHeight: func -> Int {
+        dimensions: SvgDimensions
+        getDimensions(dimensions&)
+        dimensions height
+    }
+
     render: extern(rsvg_handle_render_cairo) func (cr: Context)
+
+    render: extern(rsvg_handle_render_cairo_sub) func ~sub (cr: Context, id: CString)
 
     free: extern(rsvg_handle_free) func
 
